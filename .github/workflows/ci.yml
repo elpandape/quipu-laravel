@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.4', '8.5']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: soap, dom, openssl, zip
+          coverage: pcov
+
+      # Pro is a commercial package: it comes from the private registry, not
+      # Packagist. Composer sends these credentials preemptively, so a licence
+      # dedicated to CI is enough — never a personal one, which would take the
+      # pipeline down with it the day it gets rotated.
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+        env:
+          COMPOSER_AUTH: '{"http-basic":{"packages.elpanda.pe":{"username":"${{ secrets.QUIPU_LICENSE_USER }}","password":"${{ secrets.QUIPU_LICENSE_TOKEN }}"}}}'
+
+      - name: Quality gates
+        run: composer review

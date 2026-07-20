@@ -1,0 +1,21 @@
+# Dependencies
+/vendor/
+
+# Credenciales de la licencia Pro (registro privado): nunca al repositorio
+/auth.json
+
+# Tooling caches
+/.phpunit.cache/
+/.phpunit.result.cache
+/.php-cs-fixer.cache
+/.rector-cache/
+/.pest/
+
+# Coverage
+/coverage/
+/build/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,14 @@
+services:
+  cli:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: quipu-laravel-dev
+    working_dir: /monorepo/quipu-laravel
+    environment:
+      COMPOSER_HOME: /tmp/composer
+      # Licence credentials for the private registry (quipu-pro), forwarded
+      # from the host so `make install` works without writing an auth.json.
+      COMPOSER_AUTH: ${COMPOSER_AUTH:-}
+    volumes:
+      - ..:/monorepo
