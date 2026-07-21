@@ -7,8 +7,9 @@ namespace ElPandaPe\QuipuLaravel\Tests\Support;
 use RuntimeException;
 
 /**
- * Provides certificate paths for the tests, reusing Lite's versioned test
- * certificate so nothing here depends on a real SUNAT certificate.
+ * Provides certificate paths for the tests. These are self-signed fixtures
+ * copied from Lite and Pro, versioned here so the suite runs on a standalone
+ * clone: reaching for a sibling checkout only ever worked inside the monorepo.
  */
 final class CertificateFile
 {
@@ -18,13 +19,13 @@ final class CertificateFile
     /** Path to Lite's passphrase-less test certificate (X.509 + private key PEM). */
     public static function plain(): string
     {
-        return __DIR__ . '/../../../quipu-php-lite/tests/Fixtures/certificate.pem';
+        return __DIR__ . '/../Fixtures/certificate.pem';
     }
 
     /** Raw bytes of Pro's versioned test .pfx (PKCS#12, RUC 20000000001). */
     public static function pfxBytes(): string
     {
-        $bytes = file_get_contents(__DIR__ . '/../../../quipu-php-pro/tests/Fixtures/certificate.pfx');
+        $bytes = file_get_contents(__DIR__ . '/../Fixtures/certificate.pfx');
         if ($bytes === false) {
             throw new RuntimeException('No se pudo leer el .pfx de prueba de Pro.');
         }
