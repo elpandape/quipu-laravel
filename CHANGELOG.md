@@ -7,6 +7,19 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-07-21
+
+**Release de tooling de pruebas.** No hay cambios en `src/`: la API pública y el comportamiento son idénticos
+a los de la 1.0.0, y `tests/` queda fuera del artefacto distribuido, así que actualizar no cambia nada para
+quien instala el paquete.
+
+### Fixed
+
+- **La suite corre en un clon suelto del repositorio.** Los certificados de prueba se leían del directorio
+  hermano del monorepo (`../../../quipu-php-lite/tests/Fixtures/`), una ruta que solo existe ahí: en el CI,
+  con el repositorio clonado por su cuenta, 35 pruebas no encontraban el certificado. Ahora están versionados
+  en `tests/Fixtures/` del propio paquete.
+
 ## [1.0.0] - 2026-07-19
 
 **Versión inicial.** Al ser la **primera** publicación, este registro solo lista lo que la versión
@@ -67,5 +80,6 @@ nivel max + strict-rules**, y probada sobre `orchestra/testbench` en la matriz *
   (`acceptsEverything`/`rejectsEverything`/`observesEverything`). Reutiliza el testing toolkit de Pro cuando la
   edición Pro está activa.
 
-[Unreleased]: https://github.com/elpandape/quipu-laravel/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/elpandape/quipu-laravel/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/elpandape/quipu-laravel/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/elpandape/quipu-laravel/releases/tag/v1.0.0
